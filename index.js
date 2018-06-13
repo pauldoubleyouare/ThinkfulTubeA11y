@@ -18,7 +18,7 @@ function getDataFromApi(searchTerm, callback) {
   	q: searchTerm
   };
 
-  $.getJSON(YOUTUBE_SEARCH_URL, request, callback);
+  $.getJSON(YOUTUBE_SEARCH_URL, request, callback).fail(showError());
 }
 
 
@@ -48,6 +48,14 @@ function listenForSubmit() {
 		getDataFromApi(query, displayYouTubeSearchData); // this is calling the function "getDatafromApi" with "query" and the callback function "displayYT..."
 	});
 }
+
+function showError(err) {
+  let outputElement = $(".js-search-results");
+  let errorMessage = (`<p>We couldn't find any results :( </p>`);
+
+  outputElement.prop('hidden', false).html(errorMessage);
+}
+
 
 $(listenForSubmit);
 
